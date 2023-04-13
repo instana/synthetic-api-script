@@ -1,6 +1,6 @@
 {
   "name": "@instana/synthetic-api-script",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "tools to run synthetic api script",
   "main": "index.js",
   "files": [
