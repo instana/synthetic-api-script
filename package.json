@@ -19,7 +19,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:instana/synthetic-api-script.git"
+    "url": "git@github.com:instana/synthetic-api-script.git",
+    "baseUrl": "https://github.com/instana/synthetic-api-script"
   },
   "keywords": [
     "synthetic"
