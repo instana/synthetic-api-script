@@ -1,5 +1,6 @@
 {
   "name": "@instana/synthetic-api-script",
+  "title": "Synthetic API Script Tool",
   "version": "1.0.1",
   "description": "tools to run synthetic api script",
   "main": "index.js",
@@ -28,6 +29,7 @@
   "license": "MIT",
   "licenseFilename": "LICENSE",
   "readmeFilename": "README.md",
+  "homepage": "https://github.com/instana/synthetic-api-script#readme",
   "author": {
     "name": "Instana Inc",
     "email": "support@instana.com"
