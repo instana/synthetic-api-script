@@ -1,4 +1,5 @@
-# synthetic-api-script
+# synthetic-api-script<a href="https://www.npmjs.com/package/@instana/synthetic-api-script"><img alt="npm (scoped)" src="https://img.shields.io/npm/v/@instana/synthetic-api-script?color=0db4b33"></a>
+
 Run and debug Instana synthetic api script in local, see [Instana API Script reference](https://www.ibm.com/docs/en/instana-observability/current?topic=beta-using-api-scripts) for script syntax.
 
 ## Installation
