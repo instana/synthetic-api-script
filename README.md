@@ -133,5 +133,3 @@ const scriptPath = `${__dirname}/../examples/http-get.js`;
 ### Run and debug
 Go to Run and Debug view, then click button `Run Synthetic Script` to run and debug the selected script.  
 You can also set breakpoints and debug your script step by step.
-
-**[Changelog](CHANGELOG.md)**
