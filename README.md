@@ -35,7 +35,7 @@ Options
 
 ## Using script-cli
 
-### Get examples code from git repo
+### Get examples
 ```
 git clone https://github.com/instana/synthetic-api-script.git
 cd synthetic-api-script
