@@ -10,7 +10,8 @@
     "lib/*",
     "package.json",
     "package-lock.json",
-    "README.md"
+    "README.md",
+    "CHANGELOG.md"
   ],
   "scripts": {
     "test": "npm run test"
