@@ -1,6 +1,9 @@
 # Changelog
 
 ## 1.0.2
+- Update README
+
+## 1.0.2
 - Add homepage
 
 ## 1.0.1
