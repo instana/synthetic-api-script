@@ -1,6 +1,5 @@
 # synthetic-api-script <a href="https://www.npmjs.com/package/@instana/synthetic-api-script"><img alt="npm (scoped)" src="https://img.shields.io/npm/v/@instana/synthetic-api-script?color=0db4b33"></a>
 
-**[Changelog](CHANGELOG.md)** 
 ---
 Run and debug Instana synthetic api script in local, see [Instana API Script reference](https://www.ibm.com/docs/en/instana-observability/current?topic=beta-using-api-scripts) for script syntax.
 
@@ -36,6 +35,12 @@ Options
 
 ## Using script-cli
 
+### Get examples code from git repo
+```
+git clone https://github.com/instana/synthetic-api-script.git
+cd synthetic-api-script
+```
+
 ### Run a single script
 Syntax
 ```shell
@@ -45,6 +50,7 @@ Example
 ```shell
 script-cli examples/example1.js
 ```
+**NOTE:** use `script-cli` if it is installed globally, use `npx script-cli` if it is installed locallly.
 
 ### Run bundle script
 
@@ -127,3 +133,5 @@ const scriptPath = `${__dirname}/../examples/http-get.js`;
 ### Run and debug
 Go to Run and Debug view, then click button `Run Synthetic Script` to run and debug the selected script.  
 You can also set breakpoints and debug your script step by step.
+
+**[Changelog](CHANGELOG.md)**
