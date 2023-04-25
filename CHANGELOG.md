@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.0.5
+- Update vm2, xml2js, and aws-sdk
+
 ## 1.0.4
 - Update README
 
