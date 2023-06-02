@@ -79,7 +79,8 @@
     "validator": "^13.7.0",
     "vm2": "^3.9.17",
     "ws": "^7.4.3",
-    "xml2js": "^0.5.0"
+    "xml2js": "^0.5.0",
+    "yargs": "^17.7.2"
   },
   "bin": {
     "script-cli": "./bin/script-cli"
