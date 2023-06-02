@@ -1,57 +1,63 @@
 #!/usr/bin/env node
-const path = require('path');
-const fs = require('fs');
+const path = require("path");
+const fs = require("fs");
 
-const { executeScript } = require('../lib/executeScript');
-const { base64Content, file2String, isFolder } = require('../lib/helpers');
-const pkg = require('../package.json');
+const { executeScript } = require("../lib/executeScript");
+const { base64Content, file2String, isFolder } = require("../lib/helpers");
+const pkg = require("../package.json");
 
 var args = process.argv.slice(2);
 
 const options = {
   convert: false,
   dir: undefined,
-  zipDir: undefined
+  zipDir: undefined,
 };
 
 const helpMessage =
-  'Usage:\n' +
-  '  Run api script in local\n' +
-  '\n' +
-  'Commands\n' +
-  '  script-cli [options] <script-name>\n' +
-  '\n' +
-  'Options\n' +
-  '  -d <directory> directory for bundle scripts\n' +
-  '  -s convert script to string\n' +
-  '  -z <bundle-script-folder> <entry-script> convert bundle script to string encoded with base64\n' +
-  '  -h, --help show help\n' +
-  '  -v, --version show version\n' +
-  '\n' +
-  'Examples:\n' +
-  '1. run a single script\n' +
-  '  script-cli examples/example1.js\n' +
-  '2. run bundle scripts\n' +
-  '  script-cli -d examples/bundle-example1 index.js\n' +
-  '3. convert a script to string\n' +
-  '  script-cli -s examples/http-get.js\n' +
-  '4. convert bundle script to string encoded with base64\n' +
-  '  cd examples\n' +
-  '  script-cli -z bundle-example1 index.js\n' +
-  '\n';
+  "Usage:\n" +
+  "  Run api script in local\n" +
+  "\n" +
+  "Commands\n" +
+  "  script-cli [options] <script-name>\n" +
+  "\n" +
+  "Options\n" +
+  "  -d <directory> directory for bundle scripts\n" +
+  "  -s convert script to string\n" +
+  "  -z <bundle-script-folder> <entry-script> convert bundle script to string encoded with base64\n" +
+  "  -c secure.json specify credentials in API script\n" +
+  "  -h, --help show help\n" +
+  "  -v, --version show version\n" +
+  "\n" +
+  "Examples:\n" +
+  "1. run a single script\n" +
+  "  script-cli examples/example1.js\n" +
+  "2. run bundle scripts\n" +
+  "  script-cli -d examples/bundle-example1 index.js\n" +
+  "3. convert a script to string\n" +
+  "  script-cli -s examples/http-get.js\n" +
+  "4. convert bundle script to string encoded with base64\n" +
+  "  cd examples\n" +
+  "  script-cli -z bundle-example1 index.js\n" +
+  "\n";
 
-var scriptName = '';
+var argv = require("yargs/yargs")(process.argv.slice(2)).usage(
+  helpMessage
+).argv;
+
+var scriptName = "";
+var credentialsFile = undefined;
 function help() {
   process.stdout.write(helpMessage);
 }
 
 function error(msg) {
-  process.stderr.write('Error ' + msg + '\n');
+  process.stderr.write("Error " + msg + "\n");
   process.exit(1);
 }
 
 function isArg(arg) {
-  return args.some(function(str) {
+  return args.some(function (str) {
     return str === arg;
   });
 }
@@ -63,53 +69,70 @@ if (process.argv.length < 3) {
   scriptName = args[args.length - 1];
 }
 
-if (isArg('--help') || isArg('-h')) {
+if (
+  !isArg("--help") &&
+  !isArg("-h") &&
+  !isArg("-s") &&
+  !isArg("-d") &&
+  !isArg("-z") &&
+  !isArg("-c") &&
+  !isArg("-v") &&
+  !isArg("--version")
+) {
+  if (process.argv.length >= 3 && process.argv[2].startsWith("-") === true)
+    error("Unknown options: " + args);
+}
+
+if (argv.h || argv.help) {
   help();
   return;
-} else if (isArg('--version') || isArg('-v')) {
-  process.stdout.write('script-cli version: ' + pkg.version + '\n');
-  return;
-} else if (isArg('-s')) {
-  for (let i = 0; i < args.length - 1; i++) {
-    if (args[i] === '-s') {
-      options.convert = true;
-    }
-  }
-} else if (isArg('-d')) {
-  for (let i = 0; i < args.length - 1; i++) {
-    if (args[i] === '-d') {
-      options.dir = args[++i];
-      // console.info('dir: %s, file: %s', options.dir, scriptName);
-    }
-  }
-} else if (isArg('-z')) {
-  for (let i = 0; i < args.length - 1; i++) {
-    if (args[i] === '-z') {
-      options.zipDir = args[++i];
-      scriptName = args[++i];
-      // console.info('zipDir: %s, file: %s', options.zipDir, scriptName);
-    }
-  }
 }
-else {
-  if (args.length === 1 && args[0].indexOf('-') !== 0) {
-    scriptName = args[0];
-  } else {
-    error('Unknown options: ' + args);
+else if (argv.v || argv.version) {
+  process.stdout.write("script-cli version: " + pkg.version + "\n");
+  return;
+}
+// compress
+else if (argv.s) {
+  options.convert = true;
+  scriptName = argv.s;
+} else if (argv.d) {
+  options.dir = argv.d;
+  scriptName = argv._[0];
+} else if (argv.z) {
+  options.zipDir = argv.z;
+  scriptName = argv._[0];
+} else {
+  if (argv._ && argv._.length === 1) {
+    scriptName = argv._[0];
   }
+  // if(!argv.c)
+  //   error('Unknown options: ' + args);
+}
+
+// both bundle and api script support credentials
+if (argv.c) {
+  credentialsFile = argv.c;
+  options.secure = JSON.parse(
+    fs.readFileSync(credentialsFile, { encoding: "utf-8" })
+  );
 }
 
 if (options.convert) {
   let result = file2String(scriptName, path.resolve(scriptName));
-  process.stdout.write(result + '\n');
+  process.stdout.write(result + "\n");
 } else {
   if (options.dir) {
     // for script bundle
     const path1 = path.resolve(path.join(options.dir, scriptName));
-    executeScript(fs.readFileSync(path1), path.resolve(options.dir) + '/myscript.js', options.dir);
+    executeScript(
+      fs.readFileSync(path1),
+      path.resolve(options.dir) + "/myscript.js",
+      options.dir,
+      options
+    );
   } else if (options.zipDir) {
     const base64String = base64Content(options.zipDir, scriptName);
-    process.stdout.write(base64String + '\n');
+    process.stdout.write(base64String + "\n");
   } else {
     // single script
     const path1 = path.resolve(scriptName);
@@ -117,6 +140,6 @@ if (options.convert) {
       console.error(`${scriptName} is a folder, it should be a file here`);
       return;
     }
-    executeScript(fs.readFileSync(path1));
+    executeScript(fs.readFileSync(path1), null, null, options);
   }
 }
