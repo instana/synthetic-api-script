@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.0.6
+- Include got and add support for credentials
+
 ## 1.0.5
 - Update vm2, xml2js, and aws-sdk
 

@@ -29,6 +29,7 @@ Options
   -d <directory> directory for bundle scripts
   -s convert script to string
   -z <bundle-script-folder> <entry-script> zip the bundle scripts folder and convert to string encoded with base64
+  -c secure.json specify credentials in API script
   -h, --help show help
   -v, --version show version
 ```
