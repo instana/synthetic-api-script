@@ -88,29 +88,63 @@ Result example
 
 ### Zip and convert bundle scripts to string encoded with base64
 
-The converted string can be used in HTTPScript test [payload](https://instana.github.io/openapi/#section/Synthetic-Test-Properties:)
+The converted string can be used in HTTPScript test [payload](https://instana.github.io/openapi/#section/Synthetic-Test-Properties:).  
 
 ```shell
 script-cli -z <bundle-script-folder> <entry-script>
 ```
-Example
-```shell
+
+**Note:** `bundle-script-folder` can not include its parent folder, do not use `examples/bundle-example1`, use `bundle-example1` instead.
+
+
+If all test files are inside a folder, such as `bundle-example1`, its entry file should be relative path from the folder, it is `bundle-example1/index.js`. Its directory tree is as below:
+
+```
+bundle-example1
+├── index.js
+└── lib
+    ├── request1.js
+    └── request2.js
+
+# convert it to base64
 cd examples
-script-cli -z bundle-example1 index.js
+script-cli -z bundle-example1 bundle-example1/index.js
 ```
 
-Result example
+Result is
 ``` json
 {
   "syntheticType": "HTTPScript",
   "scripts": {
-    "scriptFile": "index.js",
+    "scriptFile": "bundle-example1/index.js",
     "bundle": "UEsDBBQAAAgAAAuAhlYAAAAAAAAAAAAAAAAQAAAAYnVuZGxlLWV4YW1wbGUxL1BLAwQUAAAICAA1YYZWh5XzwKAAAABQAQAAGAAAAGJ1bmRsZS1leGFtcGxlMS9pbmRleC5qc32OywrCMBBF9/mKLAqJICl2qUgRV4LYjT/Q1JEGpgkmUx9/bxosqGh3d+aew0zjbCDu4dJDoAVfp2g8SKFyNDofGzFbseadLf6yxcCyUZRxGIshs6wm8kb3BEEFIClaQHRizsXNeTwlebjkEJSxZycF1howAll4WGqBTPN6ZgopVdqVytYd/Oa5dcThbgItJ9UvF+z1k1f7ars57qpDZJ9QSwMEFAAACAAAZVx/VgAAAAAAAAAAAAAAABQAAABidW5kbGUtZXhhbXBsZTEvbGliL1BLAwQUAAAICABzYoZWD+ffAOIAAABzAQAAHwAAAGJ1bmRsZS1leGFtcGxlMS9saWIvcmVxdWVzdDEuanNtUDFuwzAM3PUKDg0kA4KcdLTRqejUoW9wbTpx4ZiuSKEpivy9lO00SzUIxPF4d2RLEws0zBgFniDiZxoiOrsitqiNaRdKiuNBCfYkMnNVlhN1+MGB4rG0tenT1MpA0yKALAdXwI8BeMj0cERxed4rAnDjOozR6wDPaoAe3qn7XqfyG3rIhALkFOkLtKy3Ts5DI4Zh6snZzTDnq3bsgaWRxM+aroIdW78Ev9uEe7+4Ca67BhVqRvcP0cPjfu/BvlxmbAU7aDIAb69/qnbTuuqv5dWYM3VJM+Jlpii8XTYfpja/UEsDBBQAAAgIAINihlZ2ffoi4wAAAHQBAAAfAAAAYnVuZGxlLWV4YW1wbGUxL2xpYi9yZXF1ZXN0Mi5qc21QMW7DMAzc9QoOLSQDghJ4jNGp6NShb3AkujFgm65IwSmK/L2S7TRLNQjU8e54oqeJBVpmjAIvEPEr9RGN3hBdNUr5lZLiUGeCvojMfDoclmVx/Xl0nkbdqC5NXnqaVgNkqU0FPwrgqdDdJ4opepsRgDvXYIw2C3jOA9DCmcL3piqn76AQKpBLpAVy2eydkocGdP3UkdH7wJLvBM9sgaWVxK8UML+Dtmvyxxz36Fd3x+2zLju1g/mHaKE+Hi3ot+uMXjBAWwD4eP9z1bvXLd+5vCk1Ukg5JF5nisL7astmGvULUEsBAhQDFAAACAAAC4CGVgAAAAAAAAAAAAAAABAAAAAAAAAAAAAQAO1BAAAAAGJ1bmRsZS1leGFtcGxlMS9QSwECFAMUAAAICAA1YYZWh5XzwKAAAABQAQAAGAAAAAAAAAAAAAAApIEuAAAAYnVuZGxlLWV4YW1wbGUxL2luZGV4LmpzUEsBAhQDFAAACAAAZVx/VgAAAAAAAAAAAAAAABQAAAAAAAAAAAAQAO1BBAEAAGJ1bmRsZS1leGFtcGxlMS9saWIvUEsBAhQDFAAACAgAc2KGVg/n3wDiAAAAcwEAAB8AAAAAAAAAAAAAAKSBNgEAAGJ1bmRsZS1leGFtcGxlMS9saWIvcmVxdWVzdDEuanNQSwECFAMUAAAICACDYoZWdn36IuMAAAB0AQAAHwAAAAAAAAAAAAAApIFVAgAAYnVuZGxlLWV4YW1wbGUxL2xpYi9yZXF1ZXN0Mi5qc1BLBQYAAAAABQAFAGABAAB1AwAAAAA="
   }
 }
 ```
 
-**Note:** `bundle-script-folder` can not include its parent folder, do not use `examples/bundle-example1`, use `bundle-example1` instead.
+
+If all files are not within a folder, change directory to `bundle-example1`, its directory tree is as below:
+```
+├── index.js
+└── lib
+    ├── request1.js
+    └── request2.js
+
+# convert to base64
+cd bundle-example1
+script-cli -z . index.js
+```
+
+Result is:
+``` json
+{
+  "syntheticType": "HTTPScript",
+  "scripts": {
+    "scriptFile": "index.js",
+    "bundle": "UEsDBBQAAAgIAPyDmVaHlfPAoAAAAFABAAAIAAAAaW5kZXguanN9jssKwjAQRff5iiwKiSApdqlIEVeC2I0/0NSRBqYJJlMff28aLKhod3fmnsNM42wg7uHSQ6AFX6doPEihcjQ6HxsxW7HmnS3+ssXAslGUcRiLIbOsJvJG9wRBBSApWkB0Ys7FzXk8JXm45BCUsWcnBdYaMAJZeFhqgUzzemYKKVXalcrWHfzmuXXE4W4CLSfVLxfs9ZNX+2q7Oe6qQ2SfUEsDBBQAAAgAAONEzlYAAAAAAAAAAAAAAAAEAAAAbGliL1BLAwQUAAAICADjRM5WIIaXfzkBAABQAgAADwAAAGxpYi9yZXF1ZXN0MS5qc21SzW7CMAy+9yksBEorhZTu2Gqnaacd9gwlNVDUNV3sDKaJd5/TlqEJcogi+/P3k8S6nhhqIvQMz+DxM7QeUzVVVFYliR0hwXeFANSBeaAyz3vX4JGM8/tcVcku9JZb148ESFykGfwkAMsIN3vkNM5rqQBcsSl6r2WABhFADVvXfE9TcbU7iIAM+ODdCeRYzZ3ox3Vo2n7nUjULRn/lijQQ1xzoRdyVsCKlR+M3GXPrZ1fCKasRorpLHwA1PG02GtTreUDL2EAdC/D+9sc63tNElufADggRrMcGe27rTmwFQiDr24HXtmthbcc2mSPJpRljHmZbEtrg0Qzi8OR8U5SS566Y3ZT/JbkDalh81V3AYiGnuy7QwYWugS3COB9jzPBJ4SK75LwkyYdrgpjE8+A80/xt4qtXyS9QSwMEFAAACAgA/IOZVnZ9+iLjAAAAdAEAAA8AAABsaWIvcmVxdWVzdDIuanNtUDFuwzAM3PUKDi0kA4ISeIzRqejUoW9wJLoxYJuuSMEpivy9ku00SzUI1PHueKKniQVaZowCLxDxK/URjd4QXTVK+ZWS4lBngr6IzHw6HJZlcf15dJ5G3aguTV56mlYDZKlNBT8K4KnQ3SeKKXqbEYA712CMNgt4zgPQwpnC96Yqp++gECqQS6QFctnsnZKHBnT91JHR+8CS7wTPbIGllcSvFDC/g7Zr8scc9+hXd8ftsy47tYP5h2ihPh4t6LfrjF4wQFsA+Hj/c9W71y3fubwpNVJIOSReZ4rC+2rLZhr1C1BLAQIUAxQAAAgIAPyDmVaHlfPAoAAAAFABAAAIAAAAAAAAAAAAAACkgQAAAABpbmRleC5qc1BLAQIUAxQAAAgAAONEzlYAAAAAAAAAAAAAAAAEAAAAAAAAAAAAEADtQcYAAABsaWIvUEsBAhQDFAAACAgA40TOViCGl385AQAAUAIAAA8AAAAAAAAAAAAAAKSB6AAAAGxpYi9yZXF1ZXN0MS5qc1BLAQIUAxQAAAgIAPyDmVZ2ffoi4wAAAHQBAAAPAAAAAAAAAAAAAACkgU4CAABsaWIvcmVxdWVzdDIuanNQSwUGAAAAAAQABADiAAAAXgMAAAAA"
+  }
+}
+```
 
 # Run script with VSCode
 

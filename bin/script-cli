@@ -42,7 +42,7 @@ const helpMessage =
   "  script-cli -s examples/http-get.js\n" +
   "4. convert bundle script to string encoded with base64\n" +
   "  cd examples\n" +
-  "  script-cli -z bundle-example1 index.js\n" +
+  "  script-cli -z bundle-example1 bundle-example1/index.js\n" +
   "\n";
 
 var argv = require("yargs/yargs")(process.argv.slice(2)).usage(
@@ -130,7 +130,8 @@ if (options.convert) {
     const path1 = path.resolve(path.join(options.dir, scriptName));
     executeScript(
       fs.readFileSync(path1),
-      path.resolve(options.dir) + "/myscript.js",
+      // path.resolve(options.dir) + "/myscript.js",
+      path1,
       options.dir,
       options
     );
