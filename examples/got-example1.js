@@ -3,7 +3,7 @@ var assert = require('assert');
 (async function() {
   var getOptions = {
     url: 'https://httpbin.org/get',
-    https:{ rejectUnauthorized: false },
+    https:{ rejectUnauthorized: false }, // accept self signed certificate
     headers: {
       'Additional-Header': 'Additional-Header-Data'
     }

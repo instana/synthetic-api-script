@@ -17,6 +17,11 @@ Using yarn:
 yarn add @instana/synthetic-api-script
 ```
 
+Update to latest version:
+```
+npm update -g @instana/synthetic-api-script
+```
+
 ## Usage
 ```
 Usage:
@@ -49,7 +54,7 @@ script-cli <script_name>
 ```
 Example
 ```shell
-script-cli examples/example1.js
+script-cli examples/got-example1.js
 ```
 **NOTE:** use `script-cli` if it is installed globally, use `npx script-cli` if it is installed locallly.
 
@@ -75,7 +80,7 @@ script-cli -s <script-file-path>
 
 Example
 ```shell
-script-cli -s examples/http-get.js
+script-cli -s examples/got-get.js
 ```
 
 Result example
