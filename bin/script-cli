@@ -35,14 +35,14 @@ const helpMessage =
   "  # use credentials\n" +
   "  script-cli -c creds.json examples/example1.js\n" +
   "2. run bundle scripts\n" +
-  "  script-cli -d examples/bundle-example1 index.js\n" +
+  "  script-cli -d examples/got-bundle-example1 index.js\n" +
   "  # use credentials\n" + 
-  "  script-cli -c creds.json -d examples/bundle-example1 index.js\n" +
+  "  script-cli -c creds.json -d examples/got-bundle-example1 index.js\n" +
   "3. convert a script to string\n" +
   "  script-cli -s examples/http-get.js\n" +
   "4. convert bundle script to string encoded with base64\n" +
   "  cd examples\n" +
-  "  script-cli -z bundle-example1 bundle-example1/index.js\n" +
+  "  script-cli -z got-bundle-example1 got-bundle-example1/index.js\n" +
   "\n";
 
 var argv = require("yargs/yargs")(process.argv.slice(2)).usage(
