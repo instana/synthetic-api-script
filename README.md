@@ -165,9 +165,9 @@ npm install
 ```
 
 ### Select a script to run
-Edit file `lib/runInVscode.js` and modify variable `scriptPath` to run your script, e.g, run `http-get.js` script, scriptPath is as below:
+Edit file `lib/runInVscode.js` and modify variable `scriptPath` to run your script, e.g, run `got-get.js` script, scriptPath is as below:
 ```
-const scriptPath = `${__dirname}/../examples/http-get.js`;
+const scriptPath = `${__dirname}/../examples/got-get.js`;
 ```
 
 ### Run and debug
