@@ -1,6 +1,6 @@
 const assert = require('assert');
 
-const url1 = 'https://nodejs.org/';
+const url1 = 'https://www.baidu.com/';
 function request1() {
   $http.get(url1,
     function(err, response, body) {

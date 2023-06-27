@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.7
+- Fix bundle test entry file path issue.
+- Add new variable `$got` to use got module.
+
 ## 1.0.6
 - Include got and add support for credentials
 
