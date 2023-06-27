@@ -106,3 +106,8 @@ dist
 # eslint ignore
 .eslintignore
 .eslintrc.js
+
+examples/got-bundle-example1.zip
+examples/got-bundle-example2.zip
+local-test.sh
+tests

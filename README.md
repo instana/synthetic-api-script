@@ -87,7 +87,7 @@ Result example
 ```json
 {
   "syntheticType":"HTTPScript",
-  "script":"var assert = require(\"assert\");\n\nconst requestURL = 'https://httpbin.org/get';\n\n$http.get(requestURL, {\n strictSSL: false, // false for self signed certificate\n },\n function (err, response, body) {\n if (err) throw err;\n assert.equal(response.statusCode, 200, \"Expected a 200 OK response\");\n console.info('Request URL %s, statusCode: %d', requestURL, response.statusCode);\n }\n);\n"
+  "script":"var assert = require('assert');\n\n(async function() {\n  var options = {\n    url: 'https://httpbin.org/get',\n    https:{\n      rejectUnauthorized: false\n    }\n  };\n\n  let response = await $got.get(options);\n  assert.equal(response.statusCode, 200, 'Expected a 200 OK response');\n  console.log('Request URL %s, statusCode: %d', response.url, response.statusCode);\n})();\n"
 }
 ```
 
