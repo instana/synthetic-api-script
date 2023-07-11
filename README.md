@@ -52,9 +52,14 @@ Syntax
 ```shell
 script-cli <script_name>
 ```
-Example
+Example1, run a single script
 ```shell
 script-cli examples/got-example1.js
+```
+
+Example2, run a single with credentials
+```shell
+script-cli -c creds.json got-credentials-test.js
 ```
 **NOTE:** use `script-cli` if it is installed globally, use `npx script-cli` if it is installed locallly.
 

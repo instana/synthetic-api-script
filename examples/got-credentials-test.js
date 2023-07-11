@@ -11,7 +11,7 @@ $got.get(requestURL, {
 
     // test credentials, run command
     // script-cli -c creds.json got-credentials-test.js
-    // assert.equal($secure.password1, "value1", "They should be equal")
-    console.info("use script-cli -c creds.json got-credentials-test.js to test credentials");
-    console.debug("$secure.password1:", $secure.password1);
+    assert.equal($secure.password, "value1", "$secure.password should be \"value1\"");
+    // console.info("use script-cli -c creds.json got-credentials-test.js to test credentials");
+    console.debug("$secure.password:", $secure.password);
   });
