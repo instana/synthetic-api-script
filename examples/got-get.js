@@ -11,4 +11,8 @@ var assert = require('assert');
   let response = await $got.get(options);
   assert.equal(response.statusCode, 200, 'Expected a 200 OK response');
   console.log('Request URL %s, statusCode: %d', response.url, response.statusCode);
+
+  // debug username and password
+  // console.log('$secure.username', $secure.username)
+  // console.log('$secure.password', $secure.password)
 })();
