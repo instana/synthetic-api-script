@@ -178,18 +178,10 @@ Edit file `lib/runInVscode.js` and modify variable `scriptPath` to run your scri
 const scriptPath = `${__dirname}/../examples/got-get.js`;
 ```
 
-### Mock $secure
-Edit file `lib/runInVscode.js` and modify variable `options.secure` to add credentials that are used in your API script, then use `$secure.username` and `$secure.password` to get username and password.
-
-Examples:
-```javascript
-let options = {
-    // mock $secure
-    secure: {
-        username: 'mock username',
-        password: 'mock password'
-    }
-}
+### Specify Credential file
+Edit file `lib/runInVscode.js` and modify variable `credFile` as below to specify the credential json path.
+```
+const credFile = ${__dirname}/../examples/creds.json;
 ```
 ### Run and debug
 Go to Run and Debug view, then click button `Run Synthetic Script` to run and debug the selected script.  
