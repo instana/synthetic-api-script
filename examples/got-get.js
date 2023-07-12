@@ -12,7 +12,9 @@ var assert = require('assert');
   assert.equal(response.statusCode, 200, 'Expected a 200 OK response');
   console.log('Request URL %s, statusCode: %d', response.url, response.statusCode);
 
-  // debug username and password
+  // use credentials
   // console.log('$secure.username', $secure.username)
   // console.log('$secure.password', $secure.password)
-})();
+})()
+// catch error
+// .catch(error=>console.error('error:', error))
