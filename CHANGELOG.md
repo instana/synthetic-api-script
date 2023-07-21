@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.8
+- Refine credentials examples.
+- Upgrade kafkajs and tough-cookie modules.
+
 ## 1.0.7
 - Fix bundle test entry file path issue.
 - Add new variable `$got` to use got module.
