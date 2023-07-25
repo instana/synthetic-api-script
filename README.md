@@ -3,6 +3,24 @@
 ---
 Run and debug Instana synthetic api script in local, see [Instana API Script reference](https://www.ibm.com/docs/en/instana-observability/current?topic=beta-using-api-scripts) for script syntax.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Usage](#usage)
+- [Using script-cli](#using-script-cli)
+  - [Get examples](#get-examples)
+  - [Run a single script](#run-a-single-script)
+  - [Run bundle script](#run-bundle-script)
+  - [Convert a script to string](#convert-a-script-to-string)
+  - [Zip and convert bundle scripts to string encoded with base64](#zip-and-convert-bundle-scripts-to-string-encoded-with-base64)
+- [Run script with VSCode](#run-script-with-vscode)
+  - [Download code](#download-code)
+  - [Install required modules](#install-required-modules)
+  - [Select a script to run](#select-a-script-to-run)
+  - [Specify Credential file](#specify-credential-file)
+  - [Run and debug](#run-and-debug)
+
+
 ## Installation
 Using npm:
 ```
