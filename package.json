@@ -36,7 +36,9 @@
     "email": "support@instana.com"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.348.0",
+    "@aws-sdk/client-s3": "^3.490.0",
+    "@aws-sdk/client-secrets-manager": "^3.490.0",
+    "@aws-sdk/client-sts": "^3.490.0",
     "@babel/core": "^7.23.3",
     "adm-zip": "^0.5.10",
     "assert-plus": "^1.0.0",
