@@ -1,0 +1,102 @@
+diff --git a/node_modules/vm2/lib/bridge.js b/node_modules/vm2/lib/bridge.js
+index 8690b51..afe062b 100644
+--- a/node_modules/vm2/lib/bridge.js
++++ b/node_modules/vm2/lib/bridge.js
+@@ -415,6 +415,7 @@ function createBridge(otherInit, registerProxy) {
+ 		get(target, key, receiver) {
+ 			// Note: target@this(unsafe) key@prim receiver@this(unsafe) throws@this(unsafe)
+ 			const object = this.getObject(); // @other(unsafe)
++			const onfunc = global['_synb_onObjectGetProp'];
+ 			switch (key) {
+ 				case 'constructor': {
+ 					const desc = otherSafeGetOwnPropertyDescriptor(object, key);
+@@ -445,6 +446,7 @@ function createBridge(otherInit, registerProxy) {
+ 			let ret; // @other(unsafe)
+ 			try {
+ 				ret = otherReflectGet(object, key);
++				ret = onfunc ? onfunc(object, key, ret) : ret;
+ 			} catch (e) { // @other(unsafe)
+ 				throw thisFromOtherForThrow(e);
+ 			}
+diff --git a/node_modules/vm2/lib/nodevm.js b/node_modules/vm2/lib/nodevm.js
+index d666c70..01ef7f3 100644
+--- a/node_modules/vm2/lib/nodevm.js
++++ b/node_modules/vm2/lib/nodevm.js
+@@ -353,6 +353,9 @@ class NodeVM extends VM {
+ 		// prepare global sandbox
+ 		if (sandbox) {
+ 			this.setGlobals(sandbox);
++			if(sandbox._synb_onResolverInit && resolver.hooks) {
++				resolver.hooks = Object.assign(resolver.hooks, sandbox._synb_onResolverInit);
++			}
+ 		}
+ 
+ 		if (!customResolver && requireOpts && requireOpts.import) {
+diff --git a/node_modules/vm2/lib/resolver.js b/node_modules/vm2/lib/resolver.js
+index fd86aff..876f484 100644
+--- a/node_modules/vm2/lib/resolver.js
++++ b/node_modules/vm2/lib/resolver.js
+@@ -186,6 +186,7 @@ class DefaultResolver extends Resolver {
+ 		super(fs, globalPaths, builtins);
+ 		this.packageCache = new Map();
+ 		this.scriptCache = new Map();
++    this.hooks = {};
+ 	}
+ 
+ 	getCompiler(filename) {
+@@ -502,6 +503,8 @@ class DefaultResolver extends Resolver {
+ 
+ 	// LOAD_PACKAGE_EXPORTS(X, DIR)
+ 	loadPackageExports(x, dir, extList) {
++    // Get sandbox callback hooks
++		const onfunc = this.hooks['_synb_onLoadPackageExports'];
+ 		// 1. Try to interpret X as a combination of NAME and SUBPATH where the name
+ 		//    may have a @scope/ prefix and the subpath begins with a slash (`/`).
+ 		const res = x.match(EXPORTS_PATTERN);
+@@ -516,7 +519,8 @@ class DefaultResolver extends Resolver {
+ 		if (!pack.exports) return undefined;
+ 		// 5. let MATCH = PACKAGE_EXPORTS_RESOLVE(pathToFileURL(DIR/NAME), "." + SUBPATH,
+ 		//    `package.json` "exports", ["node", "require"]) defined in the ESM resolver.
+-		const match = this.packageExportsResolve(scope, '.' + (res[2] || ''), pack.exports, ['node', 'require'], extList);
++		const cusPack = onfunc ? onfunc(x, pack) : pack;
++		const match = this.packageExportsResolve(scope, '.' + (res[2] || ''), cusPack.exports, ['node', 'require'], extList);
+ 		// 6. RESOLVE_ESM_MATCH(MATCH)
+ 		return this.resolveEsmMatch(match, x, extList);
+ 	}
+diff --git a/node_modules/vm2/lib/setup-node-sandbox.js b/node_modules/vm2/lib/setup-node-sandbox.js
+index c4fa5cb..58bd823 100644
+--- a/node_modules/vm2/lib/setup-node-sandbox.js
++++ b/node_modules/vm2/lib/setup-node-sandbox.js
+@@ -294,7 +294,7 @@ const LISTENER_HANDLER = new LocalWeakMap();
+  * @return {this}
+  */
+ function addListener(name, handler) {
+-	if (name !== 'beforeExit' && name !== 'exit') {
++	if (name !== 'beforeExit' && name !== 'exit' && name !== 'uncaughtException') {
+ 		throw new LocalError(`Access denied to listen for '${name}' event.`);
+ 	}
+ 
+@@ -326,6 +326,14 @@ const baseUptime = localProcess.uptime();
+ 
+ // FIXME wrong class structure
+ global.process = {
++	stdout: { bufferSize: 0, write: function() {}, on: function() {}, isTTY: true },
++	stderr: { bufferSize: 0, write: function() {} , fd: localProcess.stderr.fd },
++	stdin: {},
++	exit: function exit(){
++		throw new Error('process.exit is not allowed.')
++	},
++	abort: undefined,
++	env: {},
+ 	__proto__: process.prototype,
+ 	argv: optionArgv !== undefined ? optionArgv : [],
+ 	title: localProcess.title,
+@@ -403,7 +411,7 @@ global.process = {
+ 	},
+ 
+ 	removeListener: function removeListener(name, handler) {
+-		if (name !== 'beforeExit' && name !== 'exit') {
++		if (name !== 'beforeExit' && name !== 'exit' && name !== 'uncaughtException') {
+ 			return this;
+ 		}
+ 

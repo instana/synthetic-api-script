@@ -14,6 +14,7 @@
     "CHANGELOG.md"
   ],
   "scripts": {
+    "postinstall": "patch-package",
     "test": "npm run test"
   },
   "publishConfig": {
@@ -64,6 +65,7 @@
     "moment": "^2.29.4",
     "net-snmp": "^3.5.1",
     "node-stream-zip": "^1.13.6",
+    "patch-package": "^8.0.0",
     "prom-client": "^14.2.0",
     "protocol-buffers": "^4.2.0",
     "q": "^1.5.1",

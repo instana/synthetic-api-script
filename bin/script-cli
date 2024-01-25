@@ -152,3 +152,7 @@ if (options.convert) {
     executeScript(fs.readFileSync(path1), null, null, options);
   }
 }
+
+process.on('uncaughtException', (err,  origin) => {
+  console.info('eee:', err, 'origin:', origin)
+})
