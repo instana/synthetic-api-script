@@ -153,6 +153,3 @@ if (options.convert) {
   }
 }
 
-process.on('uncaughtException', (err,  origin) => {
-  console.info('eee:', err, 'origin:', origin)
-})
