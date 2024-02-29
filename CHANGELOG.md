@@ -3,6 +3,9 @@
 ## 1.1.0
 - Replace [request](https://www.npmjs.com/package/request) with [@cypress/request](https://www.npmjs.com/package/@cypress/request).
 
+## 1.0.14
+- Fixed `Cannot find module Error`.
+
 ## 1.0.13
 - Fix require issue.
 
