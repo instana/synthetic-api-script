@@ -23,12 +23,17 @@ Run and debug Instana synthetic api script in local, see [Instana API Script ref
 
 ## Installation
 Using npm:
+- install the package in global mode 
 ```
-# install the package in global mode 
 npm install -g @instana/synthetic-api-script
-# or install the package locally
+```
+
+- or install the package locally
+```
+cd test/
 npm install @instana/synthetic-api-script
 ```
+Then run script-cli using `npx script-cli` to run script.
 
 Using yarn:
 ```
