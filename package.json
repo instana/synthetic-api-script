@@ -37,6 +37,7 @@
     "email": "support@instana.com"
   },
   "dependencies": {
+    "@aws-sdk/client-cloudwatch": "^3.490.0",
     "@aws-sdk/client-s3": "^3.490.0",
     "@aws-sdk/client-secrets-manager": "^3.490.0",
     "@aws-sdk/client-sts": "^3.490.0",
