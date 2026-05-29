@@ -37,8 +37,8 @@
     "email": "support@instana.com"
   },
   "dependencies": {
-    "@aws-sdk/client-cloudwatch": "^3.978.0",
-    "@aws-sdk/client-s3": "^3.978.0",
+    "@aws-sdk/client-cloudwatch": "^3.1012.0",
+    "@aws-sdk/client-s3": "^3.992.0",
     "@aws-sdk/client-secrets-manager": "^3.978.0",
     "@aws-sdk/client-sts": "^3.978.0",
     "@babel/core": "^7.23.3",
@@ -88,7 +88,7 @@
     "unzipper": "^0.10.9",
     "url-parse": "^1.5.10",
     "urllib": "^2.43.0",
-    "uuid": "^9.0.0",
+    "uuid": "^14.0.0",
     "validator": "^13.7.0",
     "vm2": "^3.9.17",
     "ws": "^7.4.3",
